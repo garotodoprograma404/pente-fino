@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pente-fino"
+version = "0.2.1"
+description = "Olha uma pasta de código ANTES de você abrir no editor ou rodar qualquer coisa: tarefas que rodam sozinhas, texto invisível pra IA, hooks, MCP, scripts de instalação e chaves vazadas."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Garoto do Programa" }]
+
+[project.scripts]
+pente-fino = "pente_fino.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["pente_fino*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "N"]
