@@ -112,6 +112,6 @@ def _jwt_service_role(texto: str) -> re.Match | None:
 def _papel_do_jwt(carga: str) -> str | None:
     try:
         dados = json.loads(base64.urlsafe_b64decode(carga + "=" * (-len(carga) % 4)))
-    except (ValueError, binascii.Error):
+    except (ValueError, binascii.Error, RecursionError):
         return None
     return dados.get("role") if isinstance(dados, dict) else None

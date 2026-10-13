@@ -131,6 +131,10 @@ class TestLeitores(unittest.TestCase):
         self.assertEqual(jsonc.ler('{"a": "x, }", // c\n "b": [1,2,], /* d */}'), {"a": "x, }", "b": [1, 2]})
         self.assertEqual(jsonc.ler('{"u": "https://x.y/z"}'), {"u": "https://x.y/z"})
         self.assertIsNone(jsonc.ler("[" * 100_000 + "]" * 100_000))
+        # o limite é do pente, não do Python (o 3.14 do GitHub aguenta 100 mil níveis; o de casa, não)
+        self.assertIsNone(jsonc.ler("[" * 201 + "]" * 201))
+        self.assertIsNotNone(jsonc.ler("[" * 200 + "]" * 200))
+        self.assertEqual(jsonc.ler('{"a": "' + "[" * 500 + '"}'), {"a": "[" * 500})  # dentro de string não conta
         self.assertIsNone(jsonc.ler('{"a": 1'))
 
     def test_visivel_troca_invisiveis_e_controles(self):
